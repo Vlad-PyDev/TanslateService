@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Language Translator - Перевод</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="translator-container">
+    <h1>Переводчик</h1>
+    <form method="POST" action="{{ url_for('main') }}">
+      <input type="text" name="word" placeholder="Введите слово" required>
+      <select name="direction">
+        <option value="en-ru">Английский &rarr; Русский</option>
+        <option value="ru-en">Русский &rarr; Английский</option>
+      </select>
+      <button type="submit" class="btn">Перевести</button>
+    </form>
+    {% if result %}
+      <div class="translation-result">
+        <p>Перевод слова "{{ word }}": <strong>{{ result }}</strong></p>
+      </div>
+    {% endif %}
+    {% if history %}
+      <div class="history">
+        <h2>История переводов:</h2>
+        <ul>
+          {% for item in history %}
+            <li>{{ item.word }} ({{ item.direction }}) &rarr; {{ item.result }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <a href="{{ url_for('index') }}" class="btn">На старт</a>
+  </div>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
